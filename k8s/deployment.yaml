@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rottenpotatoes
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: rottenpotatoes-app
+  template:
+    metadata:
+      labels:
+        app: rottenpotatoes-app
+    spec:
+      containers:
+      - name: convtemp
+        image: fabricioveronez/rotten-potatoes
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rottenpotatoes-app
+spec:
+  selector:
+    app: rottenpotatoes-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      nodePort: 30000
+  type: NodePort
+  
+
+
